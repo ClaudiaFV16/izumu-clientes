@@ -1,0 +1,106 @@
+@model dynamic
+@{
+    var isEdit = Model?.Id != null;
+    var actionText = isEdit ? "Actualizar" : "Crear";
+}
+
+<div class="container mt-5">
+    <form method="post" class="mx-auto" style="max-width: 800px;">
+        <div class="row">
+            <!-- Primera Columna -->
+            <div class="col-md-6">
+                <div class="form-group custom-width">
+                    <label for="NombreTipoDocumento">Tipo Documento</label>
+                    <select id="NombreTipoDocumento" name="NombreTipoDocumento" class="form-control">
+                        @foreach (var tipo in Model.TiposDocumento)
+                        {
+                            if (Model.NombreTipoDocumento == tipo.Cod_TipoDocumento)
+                            {
+                                <option value="@tipo.Id" selected="selected">
+                                    @tipo.Cod_TipoDocumento - @tipo.NombreTipoDocumento
+                                </option>
+                            }
+                            else
+                            {
+                                <option value="@tipo.Id">
+                                    @tipo.Cod_TipoDocumento - @tipo.NombreTipoDocumento
+                                </option>
+                            }
+                        }
+                    </select>
+                </div>
+
+                <div class="form-group custom-width">
+                    <label for="PrimerNombre">Primer Nombre</label>
+                    <input type="text" id="PrimerNombre" name="PrimerNombre" class="form-control text-uppercase" value="@Model.PrimerNombre" required />
+                </div>
+
+                <div class="form-group custom-width">
+                    <label for="PrimerApellido">Primer Apellido</label>
+                    <input type="text" id="PrimerApellido" name="PrimerApellido" class="form-control text-uppercase" value="@Model.PrimerApellido" required />
+                </div>
+
+                <div class="form-group custom-width">
+                    <label for="DireccionResidencia">Dirección Residencia</label>
+                    <input type="text" id="DireccionResidencia" name="DireccionResidencia" class="form-control text-uppercase" value="@Model.DireccionResidencia" required />
+                </div>
+
+                <div class="form-group custom-width">
+                    <label for="NumeroCelular">Número Celular</label>
+                    <input type="tel" id="NumeroCelular" name="NumeroCelular" class="form-control" value="@Model.NumeroCelular" required />
+                </div>
+
+                <div class="form-group custom-width">
+                    <label for="PlanDePreferencia">Plan de Preferencia</label>
+                    <select id="PlanDePreferencia" asp-for="PlanId" class="form-control" required>
+                        @foreach (var planess in Model.Planes)
+                        {
+                            <option value="@planess.Id">@planess.Nombre_Plan</option>
+                        }
+                    </select>
+                </div>
+            </div>
+
+            <!-- Segunda Columna -->
+            <div class="col-md-6">
+                <div class="form-group custom-width">
+                    <label for="NumeroDocumento">Número Documento</label>
+                    <input type="text" id="NumeroDocumento" name="NumeroDocumento" class="form-control" value="@Model.NumeroDocumento" required />
+                </div>
+
+                <div class="form-group custom-width">
+                    <label for="SegundoNombre">Segundo Nombre</label>
+                    <input type="text" id="SegundoNombre" name="SegundoNombre" class="form-control text-uppercase" value="@Model.SegundoNombre" />
+                </div>
+
+                <div class="form-group custom-width">
+                    <label for="SegundoApellido">Segundo Apellido</label>
+                    <input type="text" id="SegundoApellido" name="SegundoApellido" class="form-control text-uppercase" value="@Model.SegundoApellido" />
+                </div>
+
+                <div class="form-group custom-width">
+                    <label for="FechaNacimiento">Fecha Nacimiento</label>
+                    <input type="date" id="FechaNacimiento" name="FechaNacimiento" class="form-control" value="@Model.FechaNacimiento.ToString("yyyy-MM-dd")" required />
+                </div>
+
+                <div class="form-group custom-width">
+                    <label for="Email">Email</label>
+                    <input type="email" id="Email" name="Email" class="form-control text-uppercase" value="@Model.Email" required />
+                </div>
+            </div>
+        </div>
+
+        <div class="text-center mt-4">
+            <button type="submit" class="btn btn-success" style="margin-right: 10px;">@actionText Cliente</button>
+            <a href="/" class="btn btn-danger">Cancelar</a>
+        </div>
+    </form>
+</div>
+
+<style>
+    .custom-width {
+        max-width: 280px;
+        margin-left: auto;
+        margin-right: auto;
+    }
+</style> 

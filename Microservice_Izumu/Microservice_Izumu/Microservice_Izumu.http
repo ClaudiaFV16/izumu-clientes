@@ -1,0 +1,6 @@
+@Microservice_Izumu_HostAddress = http://localhost:5020
+
+GET {{Microservice_Izumu_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###

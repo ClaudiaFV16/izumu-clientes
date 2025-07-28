@@ -1,0 +1,93 @@
+@using IzumuClientes.Models
+@model List<ClienteModels.Cliente>
+
+<div class="table-responsive mt-4">
+    <table class="table table-bordered table-striped">
+        <thead>
+            <tr>
+                <th>Tipo Documento</th>
+                <th>Número Documento</th>
+                <th>Fecha Nacimiento</th>
+                <th>Primer Nombre</th>
+                <th>Segundo Nombre</th>
+                <th>Primer Apellido</th>
+                <th>Segundo Apellido</th>
+                <th>Dirección Residencia</th>
+                <th>Número Celular</th>
+                <th>Email</th>
+                <th>Plan de Medicina Prepagada</th>
+                <th>Acciones</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var cliente in Model)
+            {
+                <tr>
+                    <td>@cliente.NombreTipoDocumento</td>
+                    <td>@cliente.NumeroDocumento</td>
+                    <td>@cliente.FechaNacimiento.ToString("dd-MM-yyyy")</td>
+                    <td>@cliente.PrimerNombre</td>
+                    <td>@cliente.SegundoNombre</td>
+                    <td>@cliente.PrimerApellido</td>
+                    <td>@cliente.SegundoApellido</td>
+                    <td>@cliente.DireccionResidencia</td>
+                    <td>@cliente.NumeroCelular</td>
+                    <td>@cliente.Email</td>
+                    <td>@cliente.Nombre_Plan</td>
+                    <td class="text-center">
+                        <div class="d-flex justify-content-center">
+                            <button type="button" class="btn btn-warning btn-sm me-2" 
+                                    onclick="editarCliente(@cliente.Id, '@cliente.NombreTipoDocumento', '@cliente.NumeroDocumento', '@cliente.FechaNacimiento.ToString("yyyy-MM-dd")', '@cliente.PrimerNombre', '@cliente.SegundoNombre', '@cliente.PrimerApellido', '@cliente.SegundoApellido', '@cliente.DireccionResidencia', '@cliente.NumeroCelular', '@cliente.Email', @cliente.PlanId)">
+                                Editar
+                            </button>
+
+                            <form method="post" asp-page-handler="DeleteCliente" asp-route-id="@cliente.Id" onsubmit="return confirmarEliminacion();">
+                                @Html.AntiForgeryToken()
+                                <button type="submit" class="btn btn-danger btn-sm">Eliminar</button>
+                            </form>
+                        </div>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
+
+<script>
+    function confirmarEliminacion() {
+        return confirm("¿Está seguro de eliminar este cliente?");
+    }
+
+    function editarCliente(id, tipoDoc, numDoc, fechaNac, primerNombre, segundoNombre, primerApellido, segundoApellido, direccion, celular, email, planId) {
+        // Crear un formulario temporal para enviar los datos por POST
+        const form = document.createElement('form');
+        form.method = 'POST';
+        form.action = '/AgregarCliente';
+
+        const campos = {
+            'Id': id,
+            'NombreTipoDocumento': tipoDoc,
+            'NumeroDocumento': numDoc,
+            'FechaNacimiento': fechaNac,
+            'PrimerNombre': primerNombre,
+            'SegundoNombre': segundoNombre,
+            'PrimerApellido': primerApellido,
+            'SegundoApellido': segundoApellido,
+            'DireccionResidencia': direccion,
+            'NumeroCelular': celular,
+            'Email': email,
+            'PlanId': planId
+        };
+
+        for (const [key, value] of Object.entries(campos)) {
+            const input = document.createElement('input');
+            input.type = 'hidden';
+            input.name = key;
+            input.value = value;
+            form.appendChild(input);
+        }
+
+        document.body.appendChild(form);
+        form.submit();
+    }
+</script> 

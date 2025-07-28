@@ -1,0 +1,12 @@
+USE DB_IZUMU;
+GO
+
+CREATE PROCEDURE sp_GetPlan
+AS
+BEGIN
+    SET NOCOUNT ON;
+
+    SELECT	Id, Nombre_Plan			
+    FROM	tb_Planes;
+END;
+GO

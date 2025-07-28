@@ -1,0 +1,27 @@
+﻿@page
+@model IndexModel
+@{
+    ViewData["Title"] = "Clientes Izumu";
+}
+
+@if (TempData["SuccessMessage"] != null)
+
+{
+    <div class="alert alert-success">
+        @TempData["SuccessMessage"]
+    </div>
+}
+@if (TempData["ErrorMessage"] != null)
+{
+    <div class="alert alert-danger">
+        @TempData["ErrorMessage"]
+    </div>
+}
+<div class="text-center">
+    <h1 class="display-4">ADMINISTRACION CLIENTES</h1>
+
+    <!-- Botón para agregar cliente -->
+    <a href="/AgregarCliente" class="btn btn-primary" style="background-color: blue; border-color: blue; margin-top: 20px;">Agregar Cliente</a>
+</div>
+
+@await Html.PartialAsync("Components/ClienteTable", Model.Clientes)

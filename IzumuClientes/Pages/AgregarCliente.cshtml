@@ -1,0 +1,24 @@
+﻿@page "{id?}"
+@model AgregarClienteModel
+@{
+    ViewData["Title"] = "Agregar y/o Editar Información del Cliente";
+}
+@if (TempData["SuccessMessage"] != null )
+
+{
+    <div class="alert alert-success">
+        @TempData["SuccessMessage"]
+    </div>
+}
+@if (TempData["ErrorMessage"] != null)
+{
+     <div class="alert alert-danger">
+        @TempData["ErrorMessage"]
+    </div>
+}
+
+<h1 class="text-center">@ViewData["Title"]</h1
+
+
+
+@await Html.PartialAsync("Components/ClienteForm", Model)
